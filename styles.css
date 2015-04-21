@@ -1,0 +1,110 @@
+/*This holds the different styles*/
+/*
+ *Filename: styles.css
+ *Programmer: William Boldt
+ *Date: December 8, 2013
+ */
+ 
+a
+{
+	color:#FFFFFF;
+}
+
+.logo
+{
+	width:1000;
+	text-align:center;
+}
+
+
+
+.container
+{
+	width:1000;
+}
+
+.header
+{
+	background-color:#585858;
+	color:#FFFFFF;
+	text-align:center;
+}
+
+.menu
+{
+	background-color:#585858;
+	height:800;
+	width:15%;
+	float:left;
+}
+
+.menuLarge
+{
+	background-color:#d0e4fe;
+	height:1300;
+	width:130;
+	float:left;
+}
+
+.margin
+{
+ 	background-color:#FFFFFF;
+ 	height:800;
+ 	width:2.5%;
+ 	float:left;
+}
+ 
+.marginLarge
+{
+  	background-color:#EEEEEE;
+  	height:1300;
+  	width:20;
+  	float:left;
+}
+
+.content
+{
+	background-color:#FFFFFF;
+	height:800;
+	width:80%;
+	float:left;
+}
+
+.contentLarge
+{
+	background-color:#EEEEEE;
+	height:1300;
+	width:830;
+	float:left;
+}
+
+.imageTextRight
+{
+	width:330; 
+	float:right;
+}
+
+.imageTextLeft
+{
+	width:330; 
+	float:left;
+}
+
+.imagePicture
+{
+	width:460; 
+	float:right;
+}
+
+.imagePictureSmall
+{
+	width:400; 
+	float:right;
+}
+
+.footer
+{
+	background-color:#FFA500;
+	font-size: small;
+	text-align:center;
+}
