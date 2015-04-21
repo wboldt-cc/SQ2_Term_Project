@@ -1232,7 +1232,7 @@ Date: December 8, 2013
 					switch($i)
 					{
 					case 1:
-						$queryString = "SELECT * FROM FT_Payroll WHERE company_id=\"$companyName\";";
+						$queryString = "SELECT * FROM FT_View WHERE company_id=\"$companyName\";";
 						$tableName = "FullTime";
 						break;
 					case 2:

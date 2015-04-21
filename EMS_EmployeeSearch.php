@@ -315,15 +315,15 @@ Date: April 17, 2015
 				}
 				else// CT employee
 				{					
-					$queryString = "SELECT Company, Business_Number FROM CT_Display ";
+					$queryString = "SELECT Contract_company_name, Business_Number FROM CT_Display ";
 					
 					if($lastNameToSearchFor != "" && $SINtoSearchFor != "")
 					{
-						$queryString .= "WHERE Company LIKE \"%$lastNameToSearchFor%\" AND SIN LIKE '%$SINtoSearchFor%' ";
+						$queryString .= "WHERE Contract_company_name LIKE \"%$lastNameToSearchFor%\" AND SIN LIKE '%$SINtoSearchFor%' ";
 					}
 					else if($lastNameToSearchFor != "")
 					{
-						$queryString .= "WHERE Company LIKE \"%$lastNameToSearchFor%\" ";
+						$queryString .= "WHERE Contract_company_name LIKE \"%$lastNameToSearchFor%\" ";
 					}
 					else
 					{
@@ -339,8 +339,8 @@ Date: April 17, 2015
 					{
 						while($row = $result->fetch_assoc())
 						{
-							$returnString .= "<option value=\"SINofEmployee=" . $row["Business_Number"] . "&Company=" . $row["Company"] . "\">"
-											 . $row["Company"] . ", "
+							$returnString .= "<option value=\"SINofEmployee=" . $row["Business_Number"] . "&Company=" . $row["Contract_company_name"] . "\">"
+											 . $row["Contract_company_name"] . ", "
 											 . $row["Business_Number"] . "</option>";
 						}
 						
@@ -482,7 +482,7 @@ Date: April 17, 2015
 				}
 				else// it's a contract employee
 				{
-					$queryString .= "CT_Display WHERE Business_Number=\"$SINofEmployee\" && Company=\"$Company\";";
+					$queryString .= "CT_Display WHERE Business_Number=\"$SINofEmployee\" && Contract_company_name=\"$Company\";";
 					
 					if($userType != "administrator")
 					{
