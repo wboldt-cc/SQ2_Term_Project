@@ -20,6 +20,7 @@ Date: April 17, 2015
 		
 
 		<?php
+			include 'validate.php';
 			// Start the session
 			session_start();
 			

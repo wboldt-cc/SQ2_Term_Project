@@ -20,6 +20,7 @@ Date: December 8, 2013
 		<title>EMS-PPS</title>
 
 		<?php
+			include 'validate.php';
 			// Start the session
 			session_start();
 			$serverName = $_SESSION['serverName'];
@@ -539,6 +540,8 @@ Date: December 8, 2013
 					{			
 						if($queryType == "insert")
 						{
+						
+							if()
 							$insertQuery = "INSERT INTO Person (p_firstname, p_lastname, si_number, date_of_birth)";
 							$insertQuery .= " VALUES ('".  $firstName . "', '".  $lastName ."', ".  $SIN .", '".  $dateOfBirth ."');";
 								
@@ -580,8 +583,7 @@ Date: December 8, 2013
 							echo "Could Not Add Employee";
 						}
 					}
-					
-					if($_POST['employeeTypeDropdown'] == 'ptEmployee')
+					else if($_POST['employeeTypeDropdown'] == 'ptEmployee')
 					{
 						if($queryType == "insert")
 						{
@@ -625,8 +627,7 @@ Date: December 8, 2013
 							echo "Could Not Add Employee";
 						}
 					}
-					
-					if($_POST['employeeTypeDropdown'] == 'sEmployee')
+					else if($_POST['employeeTypeDropdown'] == 'sEmployee')
 					{
 						if($queryType == "insert")
 						{
@@ -663,8 +664,7 @@ Date: December 8, 2013
 							echo "Could Not Add Employee";
 						}
 					}
-					
-					if($_POST['employeeTypeDropdown'] == 'cEmployee')
+					else if($_POST['employeeTypeDropdown'] == 'cEmployee')
 					{
 						if($queryType == "insert")
 						{
