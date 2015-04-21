@@ -1,5 +1,7 @@
 USE EMS;
 
+SET SQL_SAFE_UPDATES=0;
+
 CREATE TABLE seniority_report
 (
 	emp_name varchar(100),
@@ -319,3 +321,6 @@ ON season = season_type
 JOIN company
 ON ft_company_id = companyID
 WHERE current_status = (SELECT status_id FROM Employee_Status WHERE status_type = 'Inactive');
+
+SET SQL_SAFE_UPDATES=1;
+
