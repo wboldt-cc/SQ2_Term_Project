@@ -58,7 +58,6 @@ Date: December 8, 2013
 			if(isset($_POST['employeeTypeDropdown']))
 			{
 				$employeeType = $_POST['employeeTypeDropdown'];
-				$lastName = $_POST['lastName'];
 				$company = $_POST['company'];
 				
 				
@@ -535,13 +534,61 @@ Date: December 8, 2013
 				if(isset($_POST['employeeTypeDropdown']))
 				{
 					$queryType = $_POST['queryType'];
+					$validEntry = 0;
 					
 					if($_POST['employeeTypeDropdown'] == 'ftEmployee')
 					{			
+						if(ValidateName($firstName, $errorMessage) == 1)
+						{
+							echo "First Name</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}
+						if(ValidateName($lastName, $errorMessage) == 1)
+						{
+							echo "Last Name</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}
+						if(ValidateSocialInsuranceNumber($SIN, $errorMessage) == 1)
+						{
+							echo "Social Insurance Number</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}
+						if(ValidateDateOfBirth($dateOfBirth, $dateOfHire, $dateOfTermination, $errorMessage) == 1)
+						{
+							echo "Date Of Birth</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}
+						if(ValidateDateOfHire($dateOfBirth, $dateOfHire, $dateOfTermination, $errorMessage))
+						{
+							echo "Date Of Hire</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}
+						if(ValidateDateOfTermination($dateOfBirth, $dateOfHire, $dateOfTermination, $errorMessage))
+						{
+							echo "Date Of Termination</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}
+						if(ValidateSalary($salary, $errorMessage))
+						{
+							echo "Salary</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}
 						if($queryType == "insert")
 						{
-						
-							if()
 							$insertQuery = "INSERT INTO Person (p_firstname, p_lastname, si_number, date_of_birth)";
 							$insertQuery .= " VALUES ('".  $firstName . "', '".  $lastName ."', ".  $SIN .", '".  $dateOfBirth ."');";
 								
@@ -576,7 +623,10 @@ Date: December 8, 2013
 											salary = " . $salary . " 
 											WHERE ;";
 						}
-						$queryResult = $link->multi_query($insertQuery);
+						if($validEntry != 1)
+						{
+							$queryResult = $link->multi_query($insertQuery);
+						}
 						
 						if(!$queryResult)
 						{
@@ -585,6 +635,55 @@ Date: December 8, 2013
 					}
 					else if($_POST['employeeTypeDropdown'] == 'ptEmployee')
 					{
+						if(ValidateName($firstName, $errorMessage) == 1)
+						{
+							echo "First Name</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}
+						if(ValidateName($lastName, $errorMessage) == 1)
+						{
+							echo "Last Name</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}
+						if(ValidateSocialInsuranceNumber($SIN, $errorMessage) == 1)
+						{
+							echo "Social Insurance Number</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}
+						if(ValidateDateOfBirth($dateOfBirth, $dateOfHire, $dateOfTermination, $errorMessage) == 1)
+						{
+							echo "Date Of Birth</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}
+						if(ValidateDateOfHire($dateOfBirth, $dateOfHire, $dateOfTermination, $errorMessage))
+						{
+							echo "Date Of Hire</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}
+						if(ValidateDateOfTermination($dateOfBirth, $dateOfHire, $dateOfTermination, $errorMessage))
+						{
+							echo "Date Of Termination</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}
+						if(ValidateSalary($hourlyRate, $errorMessage))
+						{
+							echo "Hourly Rate</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}
 						if($queryType == "insert")
 						{
 							$insertQuery = "INSERT INTO Person (p_firstname, p_lastname, si_number, date_of_birth)";
@@ -620,7 +719,11 @@ Date: December 8, 2013
 											salary = " . $hourlyRate . " 
 											WHERE ;";
 						}
-						$queryResult = $link->multi_query($insertQuery);
+						
+						if($validEntry != 1)
+						{
+							$queryResult = $link->multi_query($insertQuery);
+						}
 						
 						if(!$queryResult)
 						{
@@ -629,6 +732,43 @@ Date: December 8, 2013
 					}
 					else if($_POST['employeeTypeDropdown'] == 'sEmployee')
 					{
+						
+						if(ValidateName($firstName, $errorMessage) == 1)
+						{
+							echo "First Name</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}
+						if(ValidateName($lastName, $errorMessage) == 1)
+						{
+							echo "Last Name</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}
+						if(ValidateSocialInsuranceNumber($SIN, $errorMessage) == 1)
+						{
+							echo "Social Insurance Number</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}
+						if(ValidateSeason($season, $errorMessage))
+						{
+							echo "Season</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}
+						if(ValidatePiecePay($piecePay, $errorMessage))
+						{
+							echo "Piece Pay</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}
+						
 						if($queryType == "insert")
 						{
 							$insertQuery = "INSERT INTO Person (p_firstname, p_lastname, si_number, date_of_birth)";
@@ -657,7 +797,10 @@ Date: December 8, 2013
 											salary = " . $hourlyRate . " 
 											WHERE ;";
 						}
-						$queryResult = $link->multi_query($insertQuery);
+						if($validEntry != 1)
+						{
+							$queryResult = $link->multi_query($insertQuery);
+						}
 						
 						if(!$queryResult)
 						{
@@ -666,6 +809,56 @@ Date: December 8, 2013
 					}
 					else if($_POST['employeeTypeDropdown'] == 'cEmployee')
 					{
+						if(ValidateName($firstName, $errorMessage) == 1)
+						{
+							echo "First Name</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}
+						if(ValidateName($lastName, $errorMessage) == 1)
+						{
+							echo "Last Name</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}
+						/*if(ValidateBusinessNumber($businessNumber, $dateOfIncorportation, $errorMessage) == 1)
+						{
+							echo "Business Number</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}*/
+						if(ValidateDateOfCreation($businessNumber, $dateOfIncorportation, $errorMessage) == 1)
+						{
+							echo "Date Of Creation</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}
+						if(ValidateContractStartDate($dateOfIncorportation, $contractStartDate, $contractEndDate, $errorMessage) == 1)
+						{
+							echo "Contract Start Date</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}
+						if(ValidateContractStopDate($dateOfIncorportation, $contractStartDate, $contractEndDate, $errorMessage) == 1)
+						{
+							echo "Contract Stop Date</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}
+						if(ValidateFixedContractAmount($contractAmount, $errorMessage) == 1)
+						{
+							echo "Contract Amount</br>";
+							echo $errorMessage;
+							echo "</br></br>";
+							$validEntry = 1;
+						}
+						
 						if($queryType == "insert")
 						{
 							$insertQuery = "INSERT INTO Person (p_firstname, p_lastname, si_number, date_of_birth)";
@@ -694,8 +887,11 @@ Date: December 8, 2013
 											salary = " . $contractAmount . " 
 											WHERE ;";
 						}
-						echo $insertQuery;
-						$queryResult = $link->multi_query($insertQuery);
+						
+						if($validEntry != 1)
+						{
+							$queryResult = $link->multi_query($insertQuery);
+						}
 						
 						if(!$queryResult)
 						{
