@@ -107,15 +107,15 @@ Description: This page will allow the user to
 							</tr>
 							<tr>
 								<th align='right'>User Name:</th>
-								<td><input type='text' name='userName' value='root'></td>
+								<td><input type='text' name='userName' value=''></td>
 							</tr>
 							<tr>
 								<th align='right'>Password:</th>
-								<td><input type='text' name='password' value='Conestoga1'></td>
+								<td><input type='text' name='password' value=''></td>
 							</tr>
 							<tr>
 								<th align='right'>Database Name:</th>
-								<td><input type='text' name='databaseName' value='newDbase'></td>
+								<td><input type='text' name='databaseName' value='EMS'></td>
 							</tr>
 						</table>
 						<br>
