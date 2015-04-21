@@ -270,15 +270,16 @@ CREATE TABLE SN_active
     av_hours float,
     company_name varchar(50)
 );
+SELECT * from SN_View;
 
 INSERT INTO SN_active
-SELECT CONCAT(p_lastname, ', ', p_firstname) AS fname, CONCAT(season_year, season_start_date), AVG(worked_hours), company_id
+SELECT CONCAT(p_lastname, ', ', p_firstname) AS fname, CONCAT(season_year, season_start_date) as season_date, AVG(worked_hours), company_id
 FROM SN_View
 JOIN SN_Payroll
-ON (SN_view.si_number = SN_Payroll.si_num) AND (SN_View.ft_company_id = (SELECT companyID FROM Company WHERE company_id = companyName))
+ON (SN_view.si_number = SN_Payroll.si_num) AND (SN_View.sn_company_id = (SELECT companyID FROM Company WHERE company_id = companyName))
 Join Seasons
 ON season = season_type
-GROUP BY fname, date_of_hire, company_id;
+GROUP BY fname, season_date, company_id;
 
 
 /* Inactive reports */
@@ -292,6 +293,19 @@ CREATE TABLE Inactive
     reason varchar(50)
 );
 
+
+
+/*
+CREATE TABLE Inactive
+(
+	f_name varchar(50),
+    hired date,
+    date_temrinated date,
+    emp_type varchar(15),
+    reason varchar(50)
+);*/
+
+/* THE FOLLOWING IS NOT RUNNING 
 INSERT INTO Inactive
 SELECT CONCAT(p_lastname, ', ', p_firstname), companyName, date_of_hire, date_of_termination, 'Fulltime', reason_for_termination
 FROM FT_View
@@ -321,6 +335,8 @@ ON season = season_type
 JOIN company
 ON ft_company_id = companyID
 WHERE current_status = (SELECT status_id FROM Employee_Status WHERE status_type = 'Inactive');
+
+*/
 
 SET SQL_SAFE_UPDATES=1;
 

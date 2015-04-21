@@ -19,6 +19,7 @@ INSERT INTO Seasons VALUES('Winter', '12-21');
 
 
 /* Insert Employees */
+/*
 INSERT INTO Person (p_firstname, p_lastname, si_number, date_of_birth)
 VALUES ("Bob", "Smith", 555111228, '1945-06-20');
 
@@ -27,7 +28,7 @@ VALUES (LAST_INSERT_ID(), LAST_INSERT_ID());
 
 INSERT INTO fulltime_employee
 VALUES (LAST_INSERT_ID(), LAST_INSERT_ID(), '2005-01-01', null, null, 45000.50, (SELECT status_id FROM Employee_Status WHERE status_type = 'Active'));
-
+*/
 
 /* Fulltime Employee view */
 CREATE VIEW FT_View AS

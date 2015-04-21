@@ -1,3 +1,5 @@
+DROP DATABASE EMS;
+
 CREATE DATABASE EMS;
 USE EMS;
 
@@ -31,8 +33,8 @@ CREATE TABLE Company
 
 CREATE TABLE Person
 (
-	p_firstName varchar(15),
-	p_lastName varchar(15),
+	p_firstName varchar(50),
+	p_lastName varchar(50),
 	si_number varchar(9) NOT NULL UNIQUE,
 	date_of_birth date,
 	p_id int AUTO_INCREMENT,

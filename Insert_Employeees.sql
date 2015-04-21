@@ -28,7 +28,7 @@ INSERT INTO Employee (emp_id, person_id)
 VALUES (LAST_INSERT_ID(), LAST_INSERT_ID());
 
 INSERT INTO fulltime_employee
-VALUES (LAST_INSERT_ID(), (SELECT companyID FROM Company WHERE companyName = "FF-Fresh Food Corp"), '1999-12-31', null, null, 45000.50, (SELECT status_id FROM Employee_Status WHERE status_type = 'Incomplete'));
+VALUES (LAST_INSERT_ID(), (SELECT companyID FROM Company WHERE companyName = "FF-Fresh Fruit Corp"), '1999-12-31', null, null, 45000.50, (SELECT status_id FROM Employee_Status WHERE status_type = 'Incomplete'));
 
 
 /* Insert Employees */
@@ -125,7 +125,7 @@ VALUES (LAST_INSERT_ID(), LAST_INSERT_ID());
 INSERT INTO seasonal_employee
 VALUES (LAST_INSERT_ID(), (SELECT companyID FROM Company WHERE companyName = "FF-Fresh Fruit Corp"), 'Fall', 2013, 1.56, 'Fired/Season ended', (SELECT status_id FROM Employee_Status WHERE status_type = 'Inactive'));
 
-
+/* STOP */
 
 /* Insert Employees */
 INSERT INTO Person (p_firstname, p_lastname, si_number, date_of_birth)
@@ -134,7 +134,7 @@ VALUES (null, "PoneSDLC", 586554895, '1958-05-05');
 INSERT INTO Employee (emp_id, person_id)
 VALUES (LAST_INSERT_ID(), LAST_INSERT_ID());
 
-INSERT INTO seasonal_employee
+INSERT INTO contract_employee
 VALUES (LAST_INSERT_ID(), (SELECT companyID FROM Company WHERE companyName = "VeraCorp Inc"), '2002-11-01', '2015-05-30', 650000.00, null, (SELECT status_id FROM Employee_Status WHERE status_type = 'Active'));
 
 
@@ -145,7 +145,7 @@ VALUES (null, "proF0-Code", 058488370, '2005-03-28');
 INSERT INTO Employee (emp_id, person_id)
 VALUES (LAST_INSERT_ID(), LAST_INSERT_ID());
 
-INSERT INTO seasonal_employee
+INSERT INTO contract_employee
 VALUES (LAST_INSERT_ID(), (SELECT companyID FROM Company WHERE companyName = "VeraCorp Inc"), '2012-11-01', '2015-10-31', 75000.00, null, (SELECT status_id FROM Employee_Status WHERE status_type = 'Active'));
 
 
@@ -156,7 +156,7 @@ VALUES (null, "Sally's Cleaning Services Ltd", 102545449, '2010-06-15');
 INSERT INTO Employee (emp_id, person_id)
 VALUES (LAST_INSERT_ID(), LAST_INSERT_ID());
 
-INSERT INTO seasonal_employee
+INSERT INTO contract_employee
 VALUES (LAST_INSERT_ID(), (SELECT companyID FROM Company WHERE companyName = "VeraCorp Inc"), null, null, 20000.00, null, (SELECT status_id FROM Employee_Status WHERE status_type = 'Incomplete'));
 
 
@@ -167,6 +167,6 @@ VALUES (null, "poneSDLC", 586554859, '1958-05-05');
 INSERT INTO Employee (emp_id, person_id)
 VALUES (LAST_INSERT_ID(), LAST_INSERT_ID());
 
-INSERT INTO seasonal_employee
+INSERT INTO contract_employee
 VALUES (LAST_INSERT_ID(), (SELECT companyID FROM Company WHERE companyName = "VeraCorp Inc"), '1958-05-05', '1992-11-01', 250000.00, 'Contract lapsed', (SELECT status_id FROM Employee_Status WHERE status_type = 'Inactive'));
 
