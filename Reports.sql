@@ -283,6 +283,7 @@ GROUP BY fname, date_of_hire, company_id;
 CREATE TABLE Inactive
 (
 	f_name varchar(50),
+    company_name varchar(50),
     hired date,
     date_temrinated date,
     emp_type varchar(15),
@@ -290,18 +291,24 @@ CREATE TABLE Inactive
 );
 
 INSERT INTO Inactive
-SELECT CONCAT(p_lastname, ', ', p_firstname), date_of_hire, date_of_termination, 'Fulltime', reason_for_termination
+SELECT CONCAT(p_lastname, ', ', p_firstname), companyName, date_of_hire, date_of_termination, 'Fulltime', reason_for_termination
 FROM FT_View
+JOIN company
+ON ft_company_id = companyID
 WHERE current_status = (SELECT status_id FROM Employee_Status WHERE status_type = 'Inactive');
 
 INSERT INTO Inactive
-SELECT CONCAT(p_lastname, ', ', p_firstname), date_of_hire, date_of_termination, 'Parttime', reason_for_termination
+SELECT CONCAT(p_lastname, ', ', p_firstname), companyName, date_of_hire, date_of_termination, 'Parttime', reason_for_termination
 FROM PT_View
+JOIN company
+ON pt_company_id = companyID
 WHERE current_status = (SELECT status_id FROM Employee_Status WHERE status_type = 'Inactive');
 
 INSERT INTO Inactive
-SELECT p_lastname, contract_start_date, contract_stop_date, 'Contract', reason_for_termination
+SELECT p_lastname, companyName, contract_start_date, contract_stop_date, 'Contract', reason_for_termination
 FROM CT_View
+JOIN company
+ON ct_company_id = companyID
 WHERE current_status = (SELECT status_id FROM Employee_Status WHERE status_type = 'Inactive');
 
 INSERT INTO Inactive
@@ -309,4 +316,6 @@ SELECT CONCAT(p_lastname, ', ', p_firstname), CONCAT(season_year, season_start_d
 FROM SN_View
 JOIN Seasons
 ON season = season_type
+JOIN company
+ON ft_company_id = companyID
 WHERE current_status = (SELECT status_id FROM Employee_Status WHERE status_type = 'Inactive');
