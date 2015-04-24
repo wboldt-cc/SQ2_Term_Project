@@ -1,6 +1,30 @@
 <?php
-	date_default_timezone_set("EST");
+/// File: Validation.php
+/// Project: EMS-PSS Term Project
+/// Programmers: Matthew Thiessen, Willi Boldt, Ping Chang Ueng, and Tylor McLaughlin
+/// First Version: April.21/2015
+/// Description: Contains all of the validation functions
 
+	date_default_timezone_set("EST");
+	/**
+	* \brief Validates the first/lastName attribute within the Employee class
+	*
+	* \details <b>Details</b>
+	*
+	* This method will take in a string of user input representing the desired
+	* employee first/last name and check whether or not it is a
+	* valid name. Returns a true or false depending on whether or not the 
+	* attribute is valid.
+	* 
+	* \param firstName - The employee's first/last name 
+	* given by the user.
+	* 
+	* \param errorMessage - The error message container 
+	* which is passed as a reference from the calling method
+	* 
+	* \return - Returns 0 if the attribute is valid.
+	* Returns 1 if the attribute is not valid.
+	*/
 	function ValidateName($name, &$errorMessage)
 	{
 		$validateStatus = 0;
@@ -30,6 +54,25 @@
 		return $validateStatus;
 	}
 	
+	/**
+	* \brief Validates the socialInsuranceNumber attribute within the Employee class
+	*
+	* \details <b>Details</b>
+	*
+	* This method will take in a string of user input representing the desired
+	* employee social insurance number and check whether or not it is a
+	* valid social insurance number. Returns a true or false depending on whether or not the 
+	* attribute is valid.
+	* 
+	* \param socialInsuranceNumber - The employee's social insurance
+	* number given by the user.
+	* 
+	* \param errorMessage - The error message container 
+	* which is passed as a reference from the calling method
+	* 
+	* \return Returns 0 if the attribute is valid.
+	* Returns 1 if the attribute is not valid.
+	*/
 	function ValidateSocialInsuranceNumber($socialInsuranceNumber, &$errorMessage)
 	{
 		$validateStatus = 0;
@@ -121,6 +164,31 @@
 		return $validateStatus;
 	}
 	
+	/**
+	* \brief Sets the dateOfBirth attribute within the Employee class
+	*
+	* \details <b>Details</b>
+	*
+	* This method will take in a dateOfBirth variable representing the 
+	* employee's date of birth and check whether or not it is a
+	* valid entry. Returns a true or false depending on whether or not the 
+	* attribute is valid.
+	* 
+	* \param dateOfBirth - The employee's date of birth 
+	* given by the user.
+	* 
+	* \param dateOfHire - The employee's date of hire 
+	* given by the user.
+	* 
+	* \param dateOfTermination - The employee's date of termination 
+	* given by the user.
+	* 
+	* \param errorMessage - The error message container 
+	* which is passed as a reference from the calling method
+	* 
+	* \return - Returns 0 if the attribute is valid.
+	* Returns 1 if the attribute is not valid.
+	*/
 	function ValidateDateOfBirth($dateOfBirth, $dateOfHire, $dateOfTermination, &$errorMessage)
 	{
 		$validateStatus = 0;
@@ -162,6 +230,25 @@
 		return $validateStatus;
 	}
 	
+	/**
+	* \brief Sets the dateOfBirth attribute within the Employee class
+	*
+	* \details <b>Details</b>
+	*
+	* This method will take in a dateOfBirth variable representing the 
+	* employee's date of birth and check whether or not it is a
+	* valid entry. Returns a true or false depending on whether or not the 
+	* attribute is valid.
+	* 
+	* \param dateOfBirth The employee's date of birth 
+	* given by the user.
+	* 
+	* \param errorMessage The error message container 
+	* which is passed as a reference from the calling method
+	* 
+	* \return Returns 0 if the attribute is valid.
+	* Returns 1 if the attribute is not valid.
+	*/
 	function ValidateDateOfBirth2($dateOfBirth, &$errorMessage)
 	{
 		$validateStatus = 0;
@@ -183,6 +270,31 @@
 		return $validateStatus;
 	}
 	
+	/**
+	* \brief Sets the dateOfHire attribute within the FulltimeEmployee class
+	*
+	* \details <b>Details</b>
+	*
+	* This method will take in a dateOfHire variable representing the 
+	* employee's date of hire and check whether or not it is a
+	* valid entry. Returns a true or false depending on whether or not the 
+	* attribute is valid.
+	* 
+	* \param dateOfBirth The employee's date of birth 
+	* given by the user.
+	* 
+	* \param dateOfHire The employee's date of hire 
+	* given by the user.
+	* 
+	* \param dateOfTermination The employee's date of termination 
+	* given by the user.
+	* 
+	* \param errorMessage - The error message container 
+	* which is passed as a reference from the calling method
+	* 
+	* \return - Returns 0 if the attribute is valid.
+	* Returns 1 if the attribute is not valid.
+	*/
 	function ValidateDateOfHire($dateOfBirth, $dateOfHire, $dateOfTermination, &$errorMessage)
 	{
 		$validateStatus = 0;
@@ -230,6 +342,31 @@
 		return $validateStatus;
 	}
 	
+	/**
+	* \brief Sets the dateOfTermination attribute within the FulltimeEmployee class
+	*
+	* \details <b>Details</b>
+	*
+	* This method will take in a dateOfTermination variable representing the 
+	* employee's date of termination and check whether or not it is a
+	* valid entry. Returns a true or false depending on whether or not the 
+	* attribute is valid.
+	* 
+	* \param dateOfBirth - The employee's date of birth 
+	* given by the user.
+	* 
+	* \param dateOfHire - The employee's date of hire 
+	* given by the user.
+	* 
+	* \param dateOfTermination - The employee's date of termination 
+	* given by the user.
+	* 
+	* \param errorMessage - The error message container 
+	* which is passed as a reference from the calling method
+	* 
+	* \return - Returns 0 if the attribute is valid.
+	* Returns 1 if the attribute is not valid.
+	*/
 	function ValidateDateOfTermination($dateOfBirth, $dateOfHire, $dateOfTermination, &$errorMessage)
 	{
 		$validateStatus = 0;
@@ -277,6 +414,25 @@
 		return $validateStatus;
 	}
 	
+	 /**
+	* \brief Sets the salary attribute within the FulltimeEmployee class
+	*
+	* \details <b>Details</b>
+	*
+	* This method will take in a salary variable representing the 
+	* employee's wage and check whether or not it is a
+	* valid entry. Returns a true or false depending on whether or not the 
+	* attribute is valid.
+	* 
+	* \param salary - The amount of money the employee makes
+	* given by the user.
+	* 
+	* \param errorMessage - The error message container 
+	* which is passed as a reference from the calling method
+	* 
+	* \return - Returns 0 if the attribute is valid.
+	* Returns 1 if the attribute is not valid.
+	*/
 	function ValidateSalary($salary, &$errorMessage)
 	{
 		$validateStatus = 0;
@@ -298,6 +454,31 @@
 		return $validateStatus;
 	}
 	
+	/**
+	* \brief Sets the contractStartDate attribute within the ContractEmployee class
+	*
+	* \details <b>Details</b>
+	*
+	* This method will take in a contractStartDate variable representing the 
+	* employee's contract starting date and check whether or not it is a
+	* valid entry. Returns a true or false depending on whether or not the 
+	* attribute is valid.
+	* 
+	* \param dateOfBirth - The employee's date of birth 
+	* given by the user.
+	* 
+	* \param contractStartDate - The employee's date of contract start date
+	* given by the user.
+	* 
+	* \param contractStopDate - The employee's contract stop date 
+	* given by the user.
+	* 
+	* \param errorMessage - The error message container 
+	* which is passed as a reference from the calling method
+	* 
+	* \return - Returns 0 if the attribute is valid.
+	* Returns 1 if the attribute is not valid.
+	*/
 	function ValidateContractStartDate($dateOfBirth, $contractStartDate, $contractStopDate, &$errorMessage)
 	{
 		$validateStatus = 0;
@@ -344,6 +525,31 @@
 		return $validateStatus;
 	}
 	
+	/**
+	* \brief Sets the contractStopDate attribute within the ContractEmployee class
+	*
+	* \details <b>Details</b>
+	*
+	* This method will take in a contractStopDate variable representing the 
+	* employee's contract ending date and check whether or not it is a
+	* valid entry. Returns a true or false depending on whether or not the 
+	* attribute is valid.
+	* 
+	* \param dateOfBirth - The employee's date of birth 
+	* given by the user.
+	* 
+	* \param contractStartDate - The employee's date of contract start date
+	* given by the user.
+	* 
+	* \param contractStopDate - The employee's contract stop date 
+	* given by the user.
+	* 
+	* \param errorMessage - The error message container 
+	* which is passed as a reference from the calling method
+	* 
+	* \return - Returns true if the attribute is valid.
+	* Returns false if the attribute is not valid.
+	*/
 	function ValidateContractStopDate($dateOfBirth, $contractStartDate, $contractStopDate, &$errorMessage)
 	{
 		$validateStatus = 0;
@@ -384,6 +590,25 @@
 		return $validateStatus;
 	}
 	
+	/**
+	* \brief Sets the salary fixedContractAmount within the ContractEmployee class
+	*
+	* \details <b>Details</b>
+	*
+	* This method will take in a fixedContractAmount representing the 
+	* employee's contract wage and check whether or not it is a
+	* valid entry. Returns a true or false depending on whether or not the 
+	* attribute is valid.
+	* 
+	* \param fixedContractAmount - The amount of money the employee will make
+	* for the given contract given by the user.
+	* 
+	* \param errorMessage - The error message container 
+	* which is passed as a reference from the calling method
+	* 
+	* \return - Returns 0 if the attribute is valid.
+	* Returns 1 if the attribute is not valid.
+	*/
 	function ValidateFixedContractAmount($fixedContractAmount, &$errorMessage)
 	{
 		$validateStatus = 0;
@@ -405,6 +630,25 @@
 		return $validateStatus;
 	}
 	
+	/**
+	* \brief Sets the hourlyRate attribute within the ParttimeEmployee class
+	*
+	* \details <b>Details</b>
+	*
+	* This method will take in a hourlyRate representing the 
+	* employee's hourly wage and check whether or not it is a
+	* valid entry. Returns a true or false depending on whether or not the 
+	* attribute is valid.
+	* 
+	* \param hourlyRate - The amount of money the employee makes per
+	* hour given by the user.
+	* 
+	* \param errorMessage - The error message container 
+	* which is passed as a reference from the calling method
+	* 
+	* \return - Returns 0 if the attribute is valid.
+	* Returns 1 if the attribute is not valid.
+	*/
 	function ValidateHourlyRate($hourlyRate, &$errorMessage)
 	{
 		$validateStatus = 0;
@@ -426,6 +670,25 @@
 		return $validateStatus;
 	}
 	
+	/**
+	* \brief Validates the season attribute within the SeasonalEmployee class
+	*
+	* \details <b>Details</b>
+	*
+	* This method will take in a string of user input representing the desired
+	* season the employee will be working and check whether or not it is a
+	* valid season. Returns a true or false depending on whether or not the 
+	* attribute is valid.
+	* 
+	* \param season - The season the employee will be employed in 
+	* given by the user.
+	* 
+	* \param errorMessage - The error message container 
+	* which is passed as a reference from the calling method
+	* 
+	* \return - Returns 0 if the attribute is valid.
+	* Returns 1 if the attribute is not valid.
+	*/
 	function ValidateSeason($season, &$errorMessage)
 	{
 		$validateStatus = 0;
@@ -452,6 +715,25 @@
 		return $validateStatus;
 	}
 	
+	/**
+	* \brief Validates the piecePay attribute within the SeasonalEmployee class
+	*
+	* \details <b>Details</b>
+	*
+	* This method will take in a piecePay representing the desired
+	* piece pay the employee will receive and check whether or not it is a
+	* valid entry. Returns a true or false depending on whether or not the 
+	* attribute is valid.
+	* 
+	* \param piecePay - The piece pay the employee will recieve 
+	* given by the user.
+	* 
+	* \param errorMessage - The error message container 
+	* which is passed as a reference from the calling method
+	* 
+	* \return - Returns 0 if the attribute is valid.
+	* Returns 1 if the attribute is not valid.
+	*/
 	function ValidatePiecePay($piecePay, &$errorMessage)
 	{
 		$validateStatus = 0;
@@ -473,6 +755,28 @@
 		return $validateStatus;
 	}
 	
+	/**
+	* \brief Validates the businessNumber attribute within the Employee class
+	*
+	* \details <b>Details</b>
+	*
+	* This method will take in a string of user input representing the desired
+	* company business number and check whether or not it is a
+	* valid business number. Returns a true or false depending on whether or not the 
+	* attribute is valid.
+	* 
+	* \param businessNumber - The company's business
+	* number given by the user.
+	* 
+	* \param dateOfCreation - The company's date of creation 
+	* given by the user.
+	* 
+	* \param errorMessage - The error message container 
+	* which is passed as a reference from the calling method
+	* 
+	* \return - Returns 0 if the attribute is valid.
+	* Returns 1 if the attribute is not valid.
+	*/
 	function ValidateBusinessNumber($businessNumber, $dateOfCreation, &$errorMessage)
 	{
 		$validateStatus = 0;
@@ -501,6 +805,29 @@
 		return $validateStatus;
 	}
 	
+	/**
+	* \brief Sets the "dateOfCreation" attribute within the Employee class
+	*
+	* \details <b>Details</b>
+	*
+	* This method will take in a dateOfCreation variable representing the 
+	* employee's date of birth and check whether or not it is a
+	* valid entry. Returns a true or false depending on whether or not the 
+	* attribute is valid. NOTE: dateOfBirth in the employee class represents
+	* the dateOfCreation attribute for the ContractEmployee class.
+	* 
+	* \param businessNumbeR - The company's business
+	* number given by the user.
+	* 
+	* \param dateOfCreatioN - The company's date of creation 
+	* given by the user.
+	* 
+	* \param errorMessage - The error message container 
+	* which is passed as a reference from the calling method
+	* 
+	* \return bool - Returns 0 if the attribute is valid.
+	* Returns 1 if the attribute is not valid.
+	*/
 	function ValidateDateOfCreation($businessNumber, $dateOfCreation, &$errorMessage)
 	{
 		$validateStatus = 0;
