@@ -1,7 +1,14 @@
 <!---
-Filename: "Home Page.html"
-Programmer: William Boldt
-Date: December 8, 2013
+File: "EMS_SystemAdmin.php"
+Project: EMS-PPS Term Project
+Programmers: 
+First Version: April 21, 2015
+Description: This page will allow Administrative users to:
+                -Add new companies to the database
+				-Add new users to the system
+				-View the Audit Table (not implemented)
+				
+			General Users do not have access to any of these capabilities.
 --->
 <html>
 
@@ -72,7 +79,6 @@ Date: December 8, 2013
 			<?php
 			if($userType == 'administrator')
 			{
-				//echo "What would you like to do: ";
 				
 				/* Display Add company UI */				
 				echo "<hr><h3>Add Company</h3>";
@@ -80,10 +86,9 @@ Date: December 8, 2013
 				echo "<input type='text' name='companyToAdd'> ";
 				echo "&nbsp&nbsp<input type='submit' name='addCompanyBtn' value='Add'><br>";
 				
-				if(isset($_POST['addCompanyBtn']))
-				{
-				
-					if(!empty($_POST['companyToAdd']))
+				if(isset($_POST['addCompanyBtn']))// check if the user pressed the "Add Company" button
+				{				
+					if(!empty($_POST['companyToAdd']))// make sure the name of the company to add is not empty
 					{
 						$companyToAdd = $_POST['companyToAdd'];
 						
@@ -104,8 +109,7 @@ Date: December 8, 2013
 									 echo "<br>Error: Could not connect to the database.";
 								}
 								else// we have a connection
-								{
-								
+								{							
 									$returnedString = addCompany($companyToAdd, $link);
 								
 									echo "<br>$returnedString";
@@ -124,6 +128,8 @@ Date: December 8, 2013
 				}// end 'if' statement	
 				
 				/* end Display Add company UI */
+				
+				/* save all of the data entered in the "add user" section into variables */
 				if(isset($_POST['userIdToAdd']))
 				{
 					$userIdToAdd = $_POST['userIdToAdd'];
@@ -157,12 +163,10 @@ Date: December 8, 2013
 								<option value='1'>Administrator</option>
 							  </select>";
 				echo "&nbsp&nbsp<input type='submit' name='addUserBtn' value='Add'><br>";
+								
 				
-				
-				
-				if(isset($_POST['addUserBtn']))
-				{
-				
+				if(isset($_POST['addUserBtn']))// check if the user pressed the "Add User" button
+				{				
 					if(!empty($_POST['userIdToAdd']) && !empty($_POST['userPasswordToAdd']))
 					{
 						$userIdToAdd = $_POST['userIdToAdd'];
@@ -171,12 +175,12 @@ Date: December 8, 2013
 						$userLastNameToAdd = "";
 						$securityLevel = $_POST['securityLevelDropDown'];
 						
-						if(!empty($_POST['userFirstNameToAdd']))
+						if(!empty($_POST['userFirstNameToAdd']))// check if the first name of the user was entered
 						{
 							$userFirstNameToAdd = $_POST['userFirstNameToAdd'];
 						}
 						
-						if(!empty($_POST['userLastNameToAdd']))
+						if(!empty($_POST['userLastNameToAdd']))// check if the last name of the user was entered
 						{
 							$userLastNameToAdd = $_POST['userLastNameToAdd'];
 						}
@@ -189,18 +193,15 @@ Date: December 8, 2013
 							 echo "<br>Error: Could not connect to the database.";
 						}
 						else// we have a connection
-						{
-						
-							$returnedString = addUser($userIdToAdd, $userPasswordToAdd, $userFirstNameToAdd, $userLastNameToAdd, $securityLevel, $link, $databaseName, $serverName);
+						{						
+							$returnedString = addUser($userIdToAdd, $userPasswordToAdd, $userFirstNameToAdd, $userLastNameToAdd, $securityLevel, $link, $databaseName);
 						
 							echo "<br>$returnedString";
 							
-						}
-							
-							
-						
+						}						
+												
 					}
-					else// user tried to add a company without a company name
+					else// user tried to add a user without an ID or password
 					{
 						echo "You must enter a User ID and a Password to add a user.";
 					}
@@ -214,7 +215,6 @@ Date: December 8, 2013
 				echo "Unfortunately this functionality is not available. Sorry for the inconvenience.";
 				
 				/* end Display Audit Table UI */
-				
 				
 			}
 			else// user is not an administrator
@@ -240,10 +240,11 @@ Date: December 8, 2013
 		// this is where all of the functions for the page are declared
 			
 			/*
-			 * Function: 
-			 * Description: 
-			 * Parameters: 
-			 * Return: 
+			 * Function: addCompany()
+			 * Description: This function adds a company to the database
+			 * Parameters: $companyToAdd - the name of the company to add
+						   $link - a connection to the database
+			 * Return: Whether or not the company was successfully added
 			 */
 			function addCompany($companyToAdd, $link)
 			{
@@ -251,28 +252,30 @@ Date: December 8, 2013
 				$queryString = "INSERT INTO Company (companyName) VALUES(\"$companyToAdd\");";							
 				
 				if($result = $link->query($queryString))// make sure query was successful
-				{
-					
+				{				
 					$returnString .= "The company: '$companyToAdd' was successfully added to the database.";
-					
-					//$result->free();
 				}
 				else// query failed
 				{
 					$returnString = "There was an error attempting to enter the company into the database.";
-//$returnString = $queryString;
 				}	
 				
 				return $returnString;
 			}
 					
 			/*
-			 * Function: 
-			 * Description: 
-			 * Parameters: 
-			 * Return: 
+			 * Function: addUser()
+			 * Description: This function adds a user to the database
+			 * Parameters: $userIdToAdd - the id of the user to add
+			               $userPasswordToAdd - the password of the user to add
+			               $userFirstNameToAdd - the first name of the user to add
+			               $userLastNameToAdd - the last name of the user to add
+			               $securityLevel - the security level of the user to add
+						   $link - a connection to the database
+						   $databaseName - the name of the database						   
+			 * Return: Whether or not adding the user to the database was successful
 			 */
-			function addUser($userIdToAdd, $userPasswordToAdd, $userFirstNameToAdd, $userLastNameToAdd, $securityLevel, $link, $databaseName, $serverName)
+			function addUser($userIdToAdd, $userPasswordToAdd, $userFirstNameToAdd, $userLastNameToAdd, $securityLevel, $link, $databaseName)
 			{
 				$returnString = "";				
 				$queryString = "INSERT INTO Users ";
@@ -317,15 +320,12 @@ Date: December 8, 2013
 				else// query failed
 				{
 					$returnString = "There was an error attempting to enter the user into the database.";
-//$returnString = $queryString;
 				}	
 				
 				echo "$queryString";
 			
 				return $returnString;
-			}
-
-			
+			}		
 			
 		?>
 

@@ -1,11 +1,16 @@
+<!---
+File: "EMS_LoginPage.php"
+Project: EMS-PPS Term Project
+Programmers: 
+First Version: April 21, 2015
+Description: This page allows the user to log into the system using:
+             -the IP address of the database
+			 -the userName
+			 -the password
+			 -the name of the database
+			 -the type of user they are (either administrator or general
+--->
 <html>
- <!-- 
-Program: EMS-PSS
-File: EMS_LoginPage.php
-Programmers: Matthew Thiessen & Willi Boldt
-First Version: April 11, 2015
-Description: This page will allow the user to 
- -->
  <head>
 	<style>
 			body
@@ -20,8 +25,7 @@ Description: This page will allow the user to
 	
 	
 	<?php 
-		//initialize all data members
-		
+		//initialize all data members		
 		$query = "";
 		$connected = "";
 		
@@ -44,8 +48,6 @@ Description: This page will allow the user to
 		</div>
 		
 		
-		
-
 		<div class="menu">
 		</div>
 
@@ -55,6 +57,7 @@ Description: This page will allow the user to
 		<div class="content"> </br>
 		
 		<?php
+			/* make sure all the fields have been filled in */
 			if(!empty($_POST['serverName']))
 			{
 				$serverName = $_POST['serverName'];
@@ -76,7 +79,7 @@ Description: This page will allow the user to
 							{
 								$userType = $_POST['userType'];
 								
-								$link = mysqli_connect($serverName, $userName, $password, $databaseName); //connects to the database
+								$link = mysqli_connect($serverName, $userName, $password, $databaseName);// try connecting to the database
 								
 								if(!$link)
 								{
@@ -126,7 +129,7 @@ Description: This page will allow the user to
 			}
 			else// we have a connection
 			{
-				
+				/* save all of the data into session variables */
 				$_SESSION['serverName'] = $serverName;
 				$_SESSION['userName'] = $userName;
 				$_SESSION['password'] = $password;
@@ -135,7 +138,7 @@ Description: This page will allow the user to
 				
 				$link->close();
 				
-				header('Location: EMS_HomePage.php');
+				header('Location: EMS_HomePage.php');// navigate to the next page
 			}
 		?>
 		

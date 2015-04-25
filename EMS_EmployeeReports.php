@@ -1,10 +1,17 @@
 <!---
-Filename: "Home Page.html"
-Programmer: William Boldt
-Date: December 8, 2013
+File: "EMS_EmployeeReports.php"
+Project: EMS-PPS Term Project
+Programmers: 
+First Version: April 21, 2015
+Description: This page allows the user to generate the following reports on a 
+             company basis:
+				-Seniority Report
+				-Weekly Hours Worked Report 
+				-Payroll Report
+			    -Active Employees Report
+				-Inactive Employees Report
 --->
 <html>
-
 
 	<head>
 
@@ -47,11 +54,8 @@ Date: December 8, 2013
 			<br/>
 			<h1>EMS-PPS</h1>
 			<br/>
-		</div>
+		</div>		
 		
-		
-		
-
 		<div class="menu">
 			</br> <b>Operation Modes:</b> </br></br>
 			<a href= "EMS_HomePage.php" >Home</a><br></br>
@@ -76,7 +80,7 @@ Date: December 8, 2013
 			$aeReportSelected = "";
 			$ieReportSelected = "";
 									
-			if(!empty($_POST['reportToGenerateDropDown']) && !empty($_POST['companyName']))
+			if(!empty($_POST['reportToGenerateDropDown']) && !empty($_POST['companyName']))// check if the user has chosen a company and a report type
 			{
 				$typeOfReport = $_POST['reportToGenerateDropDown'];
 				$companyName = $_POST['companyName'];
@@ -92,15 +96,17 @@ Date: December 8, 2013
 				}
 				else// we have a connection
 				{
-					switch($typeOfReport)
+					switch($typeOfReport)// find out which report the user would like to generate
 					{
 					case "sReport":
+						/* make the tables required to generate the report */
 						$returnedString = generate_sTable($link);
-						if($returnedString != "")
+						
+						if($returnedString != "")// check if there was an error making the table necessary to generate the report
 						{
 							echo "$returnedString";
 						}
-						else
+						else// no error
 						{
 							if(!$link)
 							{
@@ -116,73 +122,95 @@ Date: December 8, 2013
 						$sReportSelected = "selected";
 						break;
 					case "whwReport":
+						/* make the tables required to generate the report */
 						turnOffSafeUpdates($link);
 						$returnedString = generate_ftPayrollTable($link);
 						$returnedString .= generate_ptPayrollTable($link);
 						$returnedString .= generate_snPayrollTable($link);
 						turnOnSafeUpdates($link);						
 						
-						$generatedReport .= generate_whwReport($link, $companyName);
-						$generatedReport .= "For Week Ending: " . date('Y-m-d');
+						if($returnedString != "")// check if there was an error making the table necessary to generate the report
+						{
+							echo "$returnedString";
+						}
+						else// no error
+						{
+							if(!$link)
+							{
+								 echo "<br>Error: Could not connect to the database.";
+							}
+							else
+							{								
+								$generatedReport .= generate_whwReport($link, $companyName);
+								$generatedReport .= "For Week Ending: " . date('Y-m-d');
+							}
+							
+						}
+												
 						$whwReportSelected = "selected";
 						break;
-					case "pReport":
-						//echo "1";
-						turnOffSafeUpdates($link);
-						//echo "3";
-						$returnedString = generate_ftPayrollTable($link);
-						$returnedString .= generate_ptPayrollTable($link);
-						$returnedString .= generate_snPayrollTable($link);
-						if($userType == "administrator")
-						{							
+					case "pReport":						
+						if($userType == "administrator")// make sure the user is an administrator because only they have access to the report
+						{		
+							/* make the tables required to generate the report */
+							turnOffSafeUpdates($link);
+							$returnedString = generate_ftPayrollTable($link);
+							$returnedString .= generate_ptPayrollTable($link);
+							$returnedString .= generate_snPayrollTable($link);						
 							$returnedString .= generate_ctPayrollTable($link);
-						}
-						turnOnSafeUpdates($link);
-						
-						if($returnedString != "")// check if there was an error while generating the tables
-						{
-							echo "$returnedString";
-						}
-						else
-						{					
-							$generatedReport .= generate_pReport($link, $companyName, $userType);
+							turnOnSafeUpdates($link);
 							
-							$generatedReport .= "For Week Ending: " . date('Y-m-d');
+							if($returnedString != "")// check if there was an error making the tables necessary to generate the report
+							{
+								echo "$returnedString";
+							}
+							else// no error
+							{					
+								$generatedReport .= generate_pReport($link, $companyName, $userType);							
+								$generatedReport .= "For Week Ending: " . date('Y-m-d');
+							}
+							
 							$pReportSelected = "selected";
-						}
+						}																			
 						break;
-					case "aeReport":
-						turnOffSafeUpdates($link);
+					case "aeReport":				
+						if($userType == "administrator")// make sure the user is an administrator because only they have access to the report
+						{
+							/* make the tables required to generate the report */
+							turnOffSafeUpdates($link);						
+							$returnedString = generate_ftPayrollTable($link);
+							$returnedString .= generate_ptPayrollTable($link);
+							$returnedString .= generate_snPayrollTable($link);
+							
+							$returnedString = generate_ftActiveTable($link);
+							$returnedString .= generate_ptActiveTable($link);
+							$returnedString .= generate_snActiveTable($link);							
+							turnOnSafeUpdates($link);
 						
-						$returnedString = generate_ftPayrollTable($link);
-						$returnedString .= generate_ptPayrollTable($link);
-						$returnedString .= generate_snPayrollTable($link);
-						
-						$returnedString = generate_ftActiveTable($link);
-						$returnedString .= generate_ptActiveTable($link);
-						$returnedString .= generate_snActiveTable($link);
-						if($userType == "administrator")
-						{							
 							$returnedString .= generate_ctPayrollTable($link);
-							$returnedString .= generate_ctActiveTable($link);
+							$returnedString .= generate_ctActiveTable($link);														
+							
+							if($returnedString != "")// check if there was an error making the table necessary to generate the report
+							{
+								echo "$returnedString";
+							}
+							else// no error
+							{
+								$generatedReport .= generate_aeReport($link, $companyName, $userType);
+								$generatedReport .= "Date Generated: " . date('Y-m-d');
+								$aeReportSelected = "selected";
+							}
 						}
-						turnOnSafeUpdates($link);
 						
-						if($returnedString != "")// check if there was an error while generating the tables
-						{
-							echo "$returnedString";
-						}
-						else
-						{
-							$generatedReport .= generate_aeReport($link, $companyName, $userType);
-							$generatedReport .= "Date Generated: " . date('Y-m-d');
-							$aeReportSelected = "selected";
-						}
 						break;
-					case "ieReport":
-						$generatedReport .= generate_ieReport($link, $companyName, $userType);
-						$generatedReport .= "Date Generated: " . date('Y-m-d');
-						$ieReportSelected = "selected";
+					case "ieReport":				
+						if($userType == "administrator")// make sure the user is an administrator because only they have access to the report
+						{
+							$generatedReport .= generate_ieReport($link, $companyName, $userType);
+							$generatedReport .= "Date Generated: " . date('Y-m-d');
+							$ieReportSelected = "selected";
+						}
+						
 						break;
 					}
 					
@@ -198,7 +226,7 @@ Date: December 8, 2013
 				{
 					$generatedReport .= "Please enter a name for the company to generate the reports for.<br>";
 				}
-				else
+				else// company name has been entered
 				{
 					$companyName = $_POST['companyName'];
 				}
@@ -207,8 +235,9 @@ Date: December 8, 2013
 				{
 					$generatedReport .= "Please select a report type from the drop down menu.";
 				}
-				else// find which type of report the user selected and make it selected
+				else// user entered a type of report
 				{
+					// find which type of report the user selected and make it selected
 					$typeOfReport = $_POST['reportToGenerateDropDown'];
 					switch($typeOfReport)
 					{
@@ -234,8 +263,6 @@ Date: December 8, 2013
 			
 			echo "<form method='post'>		
 					What is the name of the company to display: &nbsp&nbsp&nbsp&nbsp&nbsp";
-					
-//<input type='text' name='companyName' value=\"$companyName\"><br><br>
 			
 					$link = mysqli_connect($serverName, $userName, $password, $databaseName);// connect to the database
 				
@@ -248,7 +275,8 @@ Date: December 8, 2013
 										<option value=''></option>
 										<option value='sReport' $sReportSelected>Seniority</option>
 										<option value='whwReport' $whwReportSelected>Weekly Hours Worked</option>";
-			if($userType == "administrator")
+										
+			if($userType == "administrator")// administrators can generate more reports
 			{
 				echo "<option value='pReport' $pReportSelected>Payroll</option>
 					  <option value='aeReport' $aeReportSelected>Active Employees</option>
@@ -262,7 +290,6 @@ Date: December 8, 2013
 			
 			echo "$generatedReport";
 			
-//$link->close();
 			?>
 
 		</div>
@@ -278,11 +305,10 @@ Date: December 8, 2013
 		// this is where all of the functions for the page are declared
 			
 			/*
-			 * Function: 
-			 * Description: This function generates the ___ Report and returns it as a string
-			 * Parameters: The link to the database connection and the name of the company
-			 *             that the report should be generated for
-			 * Return: The ___ Report as a string
+			 * Function: generate_sTable()
+			 * Description: This function recreates the seniority_report table
+			 * Parameters: $link - a connection to the database
+			 * Return: An empty string or an error message if something went wrong
 			 */
 			function generate_sTable($link)
 			{
@@ -373,11 +399,11 @@ Date: December 8, 2013
 			}
 			
 			/*
-			 * Function: 
-			 * Description: This function generates the ___ Report and returns it as a string
-			 * Parameters: The link to the database connection and the name of the company
-			 *             that the report should be generated for
-			 * Return: The ___ Report as a string
+			 * Function: generate_sReport()
+			 * Description: This function generates the Seniority Report and returns it as a string
+			 * Parameters: $link - a connection to the database
+			               $companyName - the name of the company to generate the report for
+			 * Return: The Report as a string or an error message
 			 */
 			function generate_sReport($link, $companyName)
 			{
@@ -442,35 +468,22 @@ Date: December 8, 2013
 
 					$returnString .= "</table>";
 					
-//$returnString .= "Date Generated: DATE";
-					
 					$result->free();
 				}
 				else// query failed
 				{
 					$returnString = "Could not generate the report. Sorry for the inconvenience";
-					$returnString .= "$queryString";
-					
-					$returnString .= "<table border='1'>
-									  <tr>
-										<th>Employee Name</th>
-										<th>SIN</th>
-										<th>Type</th>
-										<th>Date Of Hire</th>
-										<th>Years of Service</th>
-									  </tr>";
-									  $returnString .= "</table>";
 				}
 				
 				return $returnString;
 			}
 			
 			/*
-			 * Function: 
-			 * Description: This function generates the ___ Report and returns it as a string
-			 * Parameters: The link to the database connection and the name of the company
-			 *             that the report should be generated for
-			 * Return: The ___ Report as a string
+			 * Function: generate_whwReport()
+			 * Description: This function generates the Weekly Hours Worked Report and returns it as a string
+			 * Parameters: $link - a connection to the database
+			               $companyName - the name of the company to generate the report for
+			 * Return: The Report as a string or an error message
 			 */
 			function generate_whwReport($link, $companyName)
 			{
@@ -494,10 +507,6 @@ Date: December 8, 2013
 						$queryString = "SELECT * FROM SN_hours WHERE company_id=\"$companyName\" ORDER BY worked_hours, full_name DESC;";
 						$tableName = "Seasonal";
 						break;
-//case 4:
-	//$queryString = "SELECT * FROM CT_Payroll WHERE company_id=\"$companyName\";";
-	//$tableName = "Contract";
-	//break;
 					}
 					
 					if($result = $link->query($queryString))
@@ -538,11 +547,10 @@ Date: December 8, 2013
 			}
 
 			/*
-			 * Function: 
-			 * Description: This function generates the ___ Report and returns it as a string
-			 * Parameters: The link to the database connection and the name of the company
-			 *             that the report should be generated for
-			 * Return: The ___ Report as a string
+			 * Function: generate_ftPayrollTable()
+			 * Description: This function recreates the FT_Payroll table
+			 * Parameters: $link - a connection to the database
+			 * Return: An empty string or an error message if something went wrong
 			 */
 			function generate_ftPayrollTable($link)
 			{
@@ -614,11 +622,10 @@ Date: December 8, 2013
 			}
 			
 			/*
-			 * Function: 
-			 * Description: This function generates the ___ Report and returns it as a string
-			 * Parameters: The link to the database connection and the name of the company
-			 *             that the report should be generated for
-			 * Return: The ___ Report as a string
+			 * Function: generate_ptPayrollTable()
+			 * Description: This function recreates the PT_Payroll table
+			 * Parameters: $link - a connection to the database
+			 * Return: An empty string or an error message if something went wrong
 			 */
 			function generate_ptPayrollTable($link)
 			{
@@ -691,11 +698,10 @@ Date: December 8, 2013
 
 			
 			/*
-			 * Function: 
-			 * Description: This function generates the ___ Report and returns it as a string
-			 * Parameters: The link to the database connection and the name of the company
-			 *             that the report should be generated for
-			 * Return: The ___ Report as a string
+			 * Function: generate_snPayrollTable()
+			 * Description: This function recreates the SN_Payroll table
+			 * Parameters: $link - a connection to the database
+			 * Return: An empty string or an error message if something went wrong
 			 */
 			function generate_snPayrollTable($link)
 			{
@@ -779,11 +785,10 @@ Date: December 8, 2013
 
 			
 			/*
-			 * Function: 
-			 * Description: This function generates the ___ Report and returns it as a string
-			 * Parameters: The link to the database connection and the name of the company
-			 *             that the report should be generated for
-			 * Return: The ___ Report as a string
+			 * Function: generate_ctPayrollTable()
+			 * Description: This function recreates the CT_Payroll table
+			 * Parameters: $link - a connection to the database
+			 * Return: An empty string or an error message if something went wrong
 			 */
 			function generate_ctPayrollTable($link)
 			{
@@ -847,20 +852,20 @@ Date: December 8, 2013
 
 			
 			/*
-			 * Function: 
-			 * Description: This function generates the ___ Report and returns it as a string
-			 * Parameters: The link to the database connection and the name of the company
-			 *             that the report should be generated for
-			 * Return: The ___ Report as a string
+			 * Function: generate_pReport()
+			 * Description: This function generates the Payroll Report and returns it as a string
+			 * Parameters: $link - a connection to the database
+			               $companyName - the name of the company to generate the report for
+			               $userType - the type of he user
+			 * Return: The Report as a string or an error message
 			 */
 			function generate_pReport($link, $companyName, $userType)
 			{
 				$returnString = "<b>Payroll Report</b> ($companyName)<br><br>";
-				//$errorOccured = "false";
 				$tableName = "";
 				$queryString = "";
 				
-				for($i = 1; $i <= 4; $i++)
+				for($i = 1; $i <= 4; $i++)// want to display a table for each employee type
 				{
 					if(($i == 4) && ($userType != 'administrator'))
 					{
@@ -919,8 +924,7 @@ Date: December 8, 2013
 					else// query failed
 					{
 						$returnString .= "<br>FAILED while trying to generate the $tableName Payroll report. Sorry for the inconvenience";
-					}
-										
+					}									
 				
 				}
 					
@@ -928,11 +932,10 @@ Date: December 8, 2013
 			}
 			
 			/*
-			 * Function: 
-			 * Description: This function generates the ___ Report and returns it as a string
-			 * Parameters: The link to the database connection and the name of the company
-			 *             that the report should be generated for
-			 * Return: The ___ Report as a string
+			 * Function: generate_ftActiveTable()
+			 * Description: This function recreates the FT_active table
+			 * Parameters: $link - a connection to the database
+			 * Return: An empty string or an error message if something went wrong
 			 */
 			function generate_ftActiveTable($link)
 			{
@@ -979,11 +982,10 @@ Date: December 8, 2013
 			}	
 			
 			/*
-			 * Function: 
-			 * Description: This function generates the ___ Report and returns it as a string
-			 * Parameters: The link to the database connection and the name of the company
-			 *             that the report should be generated for
-			 * Return: The ___ Report as a string
+			 * Function: generate_ptActiveTable()
+			 * Description: This function recreates the PT_active table
+			 * Parameters: $link - a connection to the database
+			 * Return: An empty string or an error message if something went wrong
 			 */
 			function generate_ptActiveTable($link)
 			{
@@ -1030,11 +1032,10 @@ Date: December 8, 2013
 			}
 			
 			/*
-			 * Function: 
-			 * Description: This function generates the ___ Report and returns it as a string
-			 * Parameters: The link to the database connection and the name of the company
-			 *             that the report should be generated for
-			 * Return: The ___ Report as a string
+			 * Function: generate_ctActiveTable()
+			 * Description: This function recreates the CT_active table
+			 * Parameters: $link - a connection to the database
+			 * Return: An empty string or an error message if something went wrong
 			 */
 			function generate_ctActiveTable($link)
 			{
@@ -1080,11 +1081,10 @@ Date: December 8, 2013
 			}
 						
 			/*
-			 * Function: 
-			 * Description: This function generates the ___ Report and returns it as a string
-			 * Parameters: The link to the database connection and the name of the company
-			 *             that the report should be generated for
-			 * Return: The ___ Report as a string
+			 * Function: generate_snActiveTable()
+			 * Description: This function recreates the SN_active table
+			 * Parameters: $link - a connection to the database
+			 * Return: An empty string or an error message if something went wrong
 			 */
 			function generate_snActiveTable($link)
 			{
@@ -1133,11 +1133,12 @@ Date: December 8, 2013
 			}
 			
 			/*
-			 * Function: 
-			 * Description: This function generates the ___ Report and returns it as a string
-			 * Parameters: The link to the database connection and the name of the company
-			 *             that the report should be generated for
-			 * Return: The ___ Report as a string
+			 * Function: generate_aeReport()
+			 * Description: This function generates the Active Employment Report and returns it as a string
+			 * Parameters: $link - a connection to the database
+			               $companyName - the name of the company to generate the report for
+			               $userType - the type of he user
+			 * Return: The Report as a string or an error message
 			 */
 			function generate_aeReport($link, $companyName, $userType)
 			{
@@ -1145,7 +1146,7 @@ Date: December 8, 2013
 				$queryString = "";
 				$tableName = "";
 				
-				for($i = 1; $i <= 4; $i++)
+				for($i = 1; $i <= 4; $i++)// want to display a table for each employee type
 				{
 					if(($i == 4) && ($userType != 'administrator'))
 					{
@@ -1210,11 +1211,12 @@ Date: December 8, 2013
 			}
 			
 			/*
-			 * Function: 
-			 * Description: This function generates the ___ Report and returns it as a string
-			 * Parameters: The link to the database connection and the name of the company
-			 *             that the report should be generated for
-			 * Return: The ___ Report as a string
+			 * Function: generate_ieReport()
+			 * Description: This function generates the Inactive Employment Report and returns it as a string
+			 * Parameters: $link - a connection to the database
+			               $companyName - the name of the company to generate the report for
+			               $userType - the type of he user
+			 * Return: The Report as a string or an error message
 			 */
 			function generate_ieReport($link, $companyName, $userType)
 			{
@@ -1222,7 +1224,7 @@ Date: December 8, 2013
 				$queryString = "";
 				$tableName = "";
 				
-				for($i = 1; $i <= 4; $i++)
+				for($i = 1; $i <= 4; $i++)// want to display a table for each employee type
 				{
 					if(($i == 4) && ($userType != 'administrator'))
 					{
@@ -1303,6 +1305,13 @@ Date: December 8, 2013
 				$link->query($queryString);
 			}
 			
+			/* 
+			 * Function: displayCompanyDropDown()
+			 * Description: This function creates a drop down menu with all of the companies currently in the database
+			 * Parameters: $link - a connection to the database
+						   $companyName - the last company name that was selected
+			 * Return: An empty string or an error message if something went wrong
+			 */
 			function displayCompanyDropDown($link, $companyName)
 			{
 			$stringToEcho = "";
@@ -1318,9 +1327,9 @@ Date: December 8, 2013
 					{
 						$stringToEcho .= "<option value=\"" . $row["companyName"] . "\"";
 						
-						if($companyName == $row["companyName"])
+						if($companyName == $row["companyName"])// check if the company we just found is the last one the user selected
 						{
-							$stringToEcho .= " selected ";
+							$stringToEcho .= " selected ";// make this company the selected on in the drop down
 						}
 						$stringToEcho .= ">" . $row["companyName"] . "</option>";
 					}	

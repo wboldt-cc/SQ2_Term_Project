@@ -1,10 +1,12 @@
 <!---
-Filename: "Home Page.html"
-Programmer: William Boldt
-Date: December 8, 2013
+File: "EMS_HomePage.php"
+Project: EMS-PPS Term Project
+Programmers: 
+First Version: April 21, 2015
+Description: This page simply greats the user and allows them to
+             navigate to the other pages
 --->
 <html>
-
 
 	<head>
 
@@ -26,18 +28,13 @@ Date: December 8, 2013
 		
 	</head>
 
-
 	<body>
-
 
 		<div class="header">
 			<br/>
 			<h1>EMS-PPS</h1>
 			<br/>
-		</div>
-		
-		
-		
+		</div>						
 		
 
 		<div class="menu">

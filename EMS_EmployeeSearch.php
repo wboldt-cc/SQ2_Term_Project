@@ -1,7 +1,11 @@
 <!---
-Filename: "EMS_EmployeeSearch.php"
-Programmers: William Boldt, , and 
-Date: April 17, 2015
+File: "EMS_EmployeeSearch.php"
+Project: EMS-PPS Term Project
+Programmers: 
+First Version: April 21, 2015
+Description: This page allows the user to search for employees based on company
+             and employee type and one or more of the following: first name, last
+			 name, and SIN.
 --->
 <html>
 
@@ -38,8 +42,7 @@ Date: April 17, 2015
 			$userType = $_SESSION['userType'];
 			
 			$link = "";
-			
-			
+						
 		?>
 		
 	</head>
@@ -81,24 +84,20 @@ Date: April 17, 2015
 			$sEmployeeSelected = "";
 			$cEmployeeSelected = "";
 			
-			if ($_SERVER['REQUEST_METHOD'] == 'POST')
+			if ($_SERVER['REQUEST_METHOD'] == 'POST')// make sure the user submitted the form
 			{
 				if (!isset($_POST['searchBtn']) && !isset($_POST['displayBtn']))// check if the user wants to edit the current employee being displayed
 				{
-					//$tempOne = $_POST['hiddenCompany'];
-					//$tempTwo = $_POST['hiddenSIN'];
-					//echo "reached code<br> $tempOne $tempTwo";
-					
+					/* save the data into session variables */
 					$_SESSION['SINfromSearch'] = $_POST['hiddenSIN'];
 					$_SESSION['CompanyFromSearch'] = $_POST['hiddenCompany'];
 					$_SESSION['EmployeeTypeFromSearch'] = $_POST['hiddenEmployeeType'];
 					
-					header('Location: ./EMS_EmployeeMaintenance.php');
-					// go to modify employee page 
+					header('Location: ./EMS_EmployeeMaintenance.php');// go to modify employee page 
 				}
 			}
 			
-			if(!empty($_POST['firstName']))
+			if(!empty($_POST['firstName']))// check if the first name field has information
 			{
 				$firstNameToSearchFor = $_POST['firstName'];
 			}
@@ -107,7 +106,7 @@ Date: April 17, 2015
 				$firstNameToSearchFor = "";
 			}
 			
-			if(!empty($_POST['lastName']))
+			if(!empty($_POST['lastName']))// check if the last name field has information
 			{
 				$lastNameToSearchFor = $_POST['lastName'];
 			}
@@ -116,7 +115,7 @@ Date: April 17, 2015
 				$lastNameToSearchFor = "";
 			}
 			
-			if(!empty($_POST['SIN']))
+			if(!empty($_POST['SIN']))// check if the SIN field has information
 			{
 				$SINtoSearchFor = $_POST['SIN'];
 			}
@@ -125,7 +124,7 @@ Date: April 17, 2015
 				$SINtoSearchFor = "";
 			}
 			
-			if(!empty($_POST['employeeTypeDropDown']))
+			if(!empty($_POST['employeeTypeDropDown']))// check if the user has choosen an employee type from the drop down
 			{
 				$employeeType = $_POST['employeeTypeDropDown'];
 				
@@ -161,7 +160,7 @@ Date: April 17, 2015
 						<option value='ptEmployee' $ptEmployeeSelected>Part Time</option>
 						<option value='sEmployee' $sEmployeeSelected>Seasonal</option>";
 						
-			if($userType == 'administrator')// find out if we need to also allow contract employees
+			if($userType == 'administrator')// find out if we need to also allow the user to search for contract employees
 			{
 				echo "<option value='cEmployee' $cEmployeeSelected>Contract</option>";
 			}
@@ -186,8 +185,6 @@ Date: April 17, 2015
 							
 					if(!empty($_POST['employeeToDisplayDropDown']))// check if the user has selected an employee from the drop down menu
 					{
-						//$SINofEmployee = $_POST['employeeToDisplayDropDown'];
-						
 						parse_str($_POST['employeeToDisplayDropDown']);// extract $SINofEmployee and $Company from the value of the drop down
 						
 						$employeeInfo = changeDisplayedEmployee($SINofEmployee, $Company, $link, $employeeType);
@@ -204,8 +201,7 @@ Date: April 17, 2015
 				}
 			}
 												
-			?>
-						
+			?>						
 
 		</div>
 
@@ -221,10 +217,17 @@ Date: April 17, 2015
 		// this is where all of the functions for the page are declared
 			
 			/*
-			 * Function: 
-			 * Description: 
-			 * Parameters: 
-			 * Return: 
+			 * Function: constructDropdownMenu()
+			 * Description: This method takes in parameters to use to search the database for employees and then
+			                constructs a drop down menu of employees found in the format lastname, firstname, SIN.
+							The value of each option contains 2 name=value pairs. The first is the SIN, and the 
+							second is the company the employee works for
+			 * Parameters: $lastNameToSearchFor - the last name of the employee to search for
+			               $firstNameToSearchFor - the first name of the employee to search for
+			               $SINtoSearchFor - the SIN of the employee to search for
+						   $link - a connection to the database
+						   $employeeType - the type of employee to search for
+			 * Return: The html code that constructs the drop down menu of employees found in the search
 			 */
 			function constructDropdownMenu($lastNameToSearchFor, $firstNameToSearchFor, $SINtoSearchFor, $link, $employeeType)
 			{
@@ -232,15 +235,12 @@ Date: April 17, 2015
 				$queryString = "";
 							
 				$userType = $_SESSION['userType'];
-																																
-				//select lastName, firstName, SIN from employees where employeeType != contract & employee is active
-//$queryString = "SELECT p_lastName, p_firstName, si_number FROM Person ";
 
-				if($employeeType != "cEmployee")
+				if($employeeType != "cEmployee")// make sure the user does not want to search for contract employees
 				{
 					$queryString = "SELECT Last_Name, First_Name, SIN, Company FROM ";
 					
-					switch($employeeType)
+					switch($employeeType)// find out the type of employee
 					{
 					case 'ftEmployee':
 						$queryString .= "FT_Display ";
@@ -311,22 +311,21 @@ Date: April 17, 2015
 					else// query failed
 					{
 						$returnString = "There was an error while running the SQL script";
-	//$returnString .= $queryString;
 					}	
 				}
-				else// CT employee
+				else// it is a CT employee
 				{					
 					$queryString = "SELECT Contract_company_name, Business_Number FROM CT_Display ";
 					
-					if($lastNameToSearchFor != "" && $SINtoSearchFor != "")
+					if($lastNameToSearchFor != "" && $SINtoSearchFor != "")// check if the user wants to search by both name and SIN (business number)
 					{
 						$queryString .= "WHERE Contract_company_name LIKE \"%$lastNameToSearchFor%\" AND SIN LIKE '%$SINtoSearchFor%' ";
 					}
-					else if($lastNameToSearchFor != "")
+					else if($lastNameToSearchFor != "")// check if user only want to search by name
 					{
 						$queryString .= "WHERE Contract_company_name LIKE \"%$lastNameToSearchFor%\" ";
 					}
-					else
+					else// user only wants to seach based on SIN (business number)
 					{
 						$queryString .= "WHERE Business_Number LIKE '%$SINtoSearchFor%' ";
 					}
@@ -352,8 +351,7 @@ Date: April 17, 2015
 					else// query failed
 					{
 						$returnString = "There was an error while running the SQL script";
-	//$returnString .= $queryString;
-	echo "$queryString";
+						//echo "$queryString";// debugging statement
 					}	
 					
 				}
@@ -362,10 +360,14 @@ Date: April 17, 2015
 			}
 			
 			/*
-			 * Function: 
-			 * Description: 
-			 * Parameters: 
-			 * Return: 
+			 * Function: changeDisplayedEmployee()
+			 * Description: This method finds the employee that the user wants to display
+			                and displays all of the information of that employee
+			 * Parameters: $SINofEmployee - the SIN of the employee to display
+			               $Company - the company of the employee to display
+			               $link - a link to the database 
+			               $employeeType - the employee type of the employee to display
+			 * Return: The html code that contains all of the information of the employee
 			 */
 			function changeDisplayedEmployee($SINofEmployee, $Company, $link, $employeeType)
 			{
@@ -402,30 +404,9 @@ Date: April 17, 2015
 					}
 
 					$queryString .= "WHERE SIN=\"$SINofEmployee\" && Company=\"$Company\";";
-				
-				
+								
 					if($result = $link->query($queryString))
 					{
-					/*
-						echo "<table border='1'>";
-						echo "<tr>";
-						echo "<th>CustomerID</th>";
-						echo "<th>CompanyName</th>";
-						echo "<th>ContactName</th>";
-						echo "<th>ContactTitle</th>";
-						echo "<th>Address</th>";
-						echo "<th>City</th>";
-						echo "<th>Region</th>";
-						echo "<th>PostalCode</th>";
-						echo "<th>Country</th>";
-						echo "<th>Phone</th>";
-						echo "<th>Fax</th>";
-						echo "</tr>";
-						
-						
-				$season = "";
-				$year = "";
-						*/
 						
 						while($row = $result->fetch_assoc())
 						{
@@ -434,6 +415,7 @@ Date: April 17, 2015
 									  SIN: " . $row['SIN'] . "</br>
 									  Date of Birth: " . $row['Date_of_Birth'] . " </br>
 									  Employed with Company: " . $row['Company'] . " </br>";
+									  
 							switch($employeeType)
 							{
 							case 'ftEmployee':
@@ -444,8 +426,7 @@ Date: April 17, 2015
 								$returnString .= "Season: " . $row['Season'] . " </br>
 								                  Year: " . $row['Year'] . " </br>";
 								break;								
-							}
-									  								
+							}								  								
 							
 							if($userType == "administrator")
 							{
@@ -478,8 +459,7 @@ Date: April 17, 2015
 						$returnString = "Could not display the Employees Information. Sorry for the inconvenience";
 						$returnString .= "<hr>$queryString";
 					}																
-							
-				
+										
 				}
 				else// it's a contract employee
 				{
