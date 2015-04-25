@@ -1,7 +1,7 @@
 <!---
 File: "EMS_HomePage.php"
 Project: EMS-PPS Term Project
-Programmers: 
+Programmers: Matthew Thiessen, Willi Boldt, Ping Chang Ueng, and Tylor McLaughlin
 First Version: April 21, 2015
 Description: This page simply greats the user and allows them to
              navigate to the other pages

@@ -1,7 +1,7 @@
 <!---
 File: "EMS_EmployeeReports.php"
 Project: EMS-PPS Term Project
-Programmers: 
+Programmers: Matthew Thiessen, Willi Boldt, Ping Chang Ueng, and Tylor McLaughlin
 First Version: April 21, 2015
 Description: This page allows the user to generate the following reports on a 
              company basis:

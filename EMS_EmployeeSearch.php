@@ -1,7 +1,7 @@
 <!---
 File: "EMS_EmployeeSearch.php"
 Project: EMS-PPS Term Project
-Programmers: 
+Programmers: Matthew Thiessen, Willi Boldt, Ping Chang Ueng, and Tylor McLaughlin
 First Version: April 21, 2015
 Description: This page allows the user to search for employees based on company
              and employee type and one or more of the following: first name, last

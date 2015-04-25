@@ -1,10 +1,11 @@
-/*This holds the different styles*/
 /*
- *Filename: styles.css
- *Programmer: William Boldt
- *Date: December 8, 2013
- */
- 
+File: "styles.css"
+Project: EMS-PPS Term Project
+Programmers: Matthew Thiessen, Willi Boldt, Ping Chang Ueng, and Tylor McLaughlin
+First Version: April 21, 2015
+Description: This page holds all of styles for the project
+*/
+
 a
 {
 	color:#FFFFFF;
@@ -76,30 +77,6 @@ a
 	height:1300;
 	width:830;
 	float:left;
-}
-
-.imageTextRight
-{
-	width:330; 
-	float:right;
-}
-
-.imageTextLeft
-{
-	width:330; 
-	float:left;
-}
-
-.imagePicture
-{
-	width:460; 
-	float:right;
-}
-
-.imagePictureSmall
-{
-	width:400; 
-	float:right;
 }
 
 .footer

@@ -1,7 +1,7 @@
 <!---
 File: "EMS_SystemAdmin.php"
 Project: EMS-PPS Term Project
-Programmers: 
+Programmers: Matthew Thiessen, Willi Boldt, Ping Chang Ueng, and Tylor McLaughlin
 First Version: April 21, 2015
 Description: This page will allow Administrative users to:
                 -Add new companies to the database
